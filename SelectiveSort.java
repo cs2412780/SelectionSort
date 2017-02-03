@@ -51,12 +51,12 @@ public class SelectiveSort {
 			for(int j = i; j < array.length; j++) {
 				if(array[indexOfSmallest] > array[j]) {
 					indexOfSmallest = j;
-				}	
-			}
+				}
+			}//end nested for
 			int temp = array[i];
 			array[i] = array[indexOfSmallest];
 			array[indexOfSmallest] = temp;	
-		}
+		}//end for
 	}//end selectiveSortByIteration
 	
 	public static void selectiveSortByRecursion(int[] array, int firstUnsorted) {
