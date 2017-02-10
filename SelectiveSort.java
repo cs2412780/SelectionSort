@@ -69,7 +69,10 @@ public class SelectiveSort {
 	
 	
 	
-	
+	/**
+	 * a function that uses iterative selection sort to sort an array.
+	 * @param array The array that to be sorted
+	 */
 	public static void selectiveSortByIteration(int[] array) {
 		int indexOfSmallest = 0;
 		for(int i = 0; i < array.length; i++) {
@@ -79,22 +82,31 @@ public class SelectiveSort {
 					indexOfSmallest = j;
 				}
 			}//end nested for
-			int temp = array[i];
-			array[i] = array[indexOfSmallest];
-			array[indexOfSmallest] = temp;	
+			swap(array, i, indexOfSmallest);	
 		}//end for
 	}//end selectiveSortByIteration
 	
+	/**
+	 * a function that uses recursive selection sort to sort an array.
+	 * @param array The array that to be sorted
+	 * @param firstUnsorted The index of the first entry in an unsorted part of the array
+	 */
 	public static void selectiveSortByRecursion(int[] array, int firstUnsorted) {
 		if (firstUnsorted < array.length - 1) {
 			int indexOfSmallest = 0;
 			indexOfSmallest = findIndexOfSmallest(array, firstUnsorted);
-			swaap(array, firstUnsorted, indexOfSmallest);
+			swap(array, firstUnsorted, indexOfSmallest);
 			selectiveSortByRecursion(array,firstUnsorted + 1);
 		}
 		
 	}//selectiveSortByRecursion
 	
+	/**
+	 * a function that find the index of the smallest entry in an array
+	 * @param array The target array
+	 * @param indexOfCheckingElement The starting index
+	 * @return Index of the smallest entry
+	 */
 	private static int findIndexOfSmallest(int[] array, int indexOfCheckingElement) {
 		if(indexOfCheckingElement >= array.length - 1) {
 			return indexOfCheckingElement;
@@ -109,7 +121,14 @@ public class SelectiveSort {
 		}	
 	}//end findIndexOfSmallest		
 
-	private static void swaap(int[] array, int first, int last) {
+	
+	/**
+	 * swap two entries.
+	 * @param array the target array
+	 * @param first Index of an entry
+	 * @param last Index Of another entry
+	 */
+	private static void swap(int[] array, int first, int last) {
 		int temp = array[first];
 		array[first] = array[last];
 		array[last] = temp;
