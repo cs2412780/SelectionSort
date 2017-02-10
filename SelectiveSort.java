@@ -2,41 +2,67 @@ package sortSelective;
 
 import java.util.Random;
 
+import lab1.ArrayBag;
+
 public class SelectiveSort { 
 
 	public static void main(String[] args) {
 
+		ArrayBag<Integer> a1 = new ArrayBag<>(1000);
+		ArrayBag<Integer> a2 = new ArrayBag<>(1000);
+
 		Random r = new Random();
-		int[] array =new int[10];
-		System.out.println("random integers: ");
-		for(int i = 0; i < array.length; i++) {
-			array[i] = r.nextInt(50);
-		}
-		for(int i = 0; i < array.length; i++) {
-			 System.out.println(array[i]);
-		}
+		int[] array =new int[1000];
 		
-		System.out.println("selectiveSortByRecursion: ");
-		
-		selectiveSortByRecursion(array,0);
 		for(int i = 0; i < array.length; i++) {
-			 System.out.println(array[i]);
+			array[i] = r.nextInt(1000);
+			a1.add(array[i]);
+			//System.out.println(array[i]);
 		}
-		
-		System.out.println("random integers: ");
-		for(int i = 0; i < array.length; i++) {
-			array[i] = r.nextInt(50);
-		}
-		for(int i = 0; i < array.length; i++) {
-			 System.out.println(array[i]);
-		}
-		
-		selectiveSortByIteration(array);
 		
 		System.out.println("selectiveSortByIteration: ");
-		
+		selectiveSortByIteration(array);
 		for(int i = 0; i < array.length; i++) {
-			 System.out.println(array[i]);
+			a2.add(array[i]);
+			//System.out.println(array[i]);
+		}
+		boolean pass = true;
+		for(int i = 0; i < array.length - 1; i++) {
+			if(array[i] > array[i + 1]) {
+				System.out.println("*****Failed");
+				pass = false;
+				break;
+			}
+		}
+		
+		if(a1.equals(a2) && pass) {
+			System.out.println("Sorted.");
+		}
+		System.out.println();
+		
+		a1.clear();
+		a2.clear();
+		for(int i = 0; i < array.length; i++) {
+			array[i] = r.nextInt(100);
+			a1.add(array[i]);
+			//System.out.println(array[i]);
+		}
+		System.out.println("selectiveSortByRecursion: ");
+		selectiveSortByRecursion(array,0);
+		for(int i = 0; i < array.length; i++) {
+			a2.add(array[i]);
+			//System.out.println(array[i]);
+		}
+		pass = true;
+		for(int i = 0; i < array.length - 1; i++) {
+			if(array[i] > array[i + 1]) {
+				System.out.println("*****Failed");
+				pass = false;
+				break;
+			}
+		}
+		if(a1.equals(a2) && pass) {
+			System.out.println("Sorted.");
 		}
 	}//end main
 	
@@ -61,29 +87,31 @@ public class SelectiveSort {
 	
 	public static void selectiveSortByRecursion(int[] array, int firstUnsorted) {
 		if (firstUnsorted < array.length - 1) {
-			int temp = 0;
-			int index = 0;
-			temp = array[firstUnsorted];		
-			index = findIndexOfSmallest(array, firstUnsorted);
-			array[firstUnsorted] = array[index];
-			array[index] = temp;
+			int indexOfSmallest = 0;
+			indexOfSmallest = findIndexOfSmallest(array, firstUnsorted);
+			swaap(array, firstUnsorted, indexOfSmallest);
 			selectiveSortByRecursion(array,firstUnsorted + 1);
 		}
 		
 	}//selectiveSortByRecursion
 	
-	private static int findIndexOfSmallest(int[] array, int checkingElement) {
-		if(checkingElement >= array.length - 1) {
-			return checkingElement;
+	private static int findIndexOfSmallest(int[] array, int indexOfCheckingElement) {
+		if(indexOfCheckingElement >= array.length - 1) {
+			return indexOfCheckingElement;
 		}
 		else {
-			 int index = findIndexOfSmallest(array, checkingElement + 1);
-			 if (array[index] < array[checkingElement]) {
+			 int index = findIndexOfSmallest(array, indexOfCheckingElement + 1);
+			 if (array[index] < array[indexOfCheckingElement]) {
 				 return index;
 			 }
 			 else
-				 return checkingElement;
+				 return indexOfCheckingElement;
 		}	
 	}//end findIndexOfSmallest		
 
+	private static void swaap(int[] array, int first, int last) {
+		int temp = array[first];
+		array[first] = array[last];
+		array[last] = temp;
+	}
 }
